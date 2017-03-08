@@ -54,9 +54,11 @@ rm -rf vagrant*.deb
 #Adds url entry used by homestead to hosts file
 touch /tmp/hosts
 echo "192.168.10.10     homestead.app" > /tmp/hosts
+sudo cp /etc/hosts /etc/hosts.BAK
 cat /etc/hosts >> /tmp/hosts
-sudo rm -f /etc/hosts
+sudo rm /etc/hosts
 sudo mv /tmp/hosts /etc/
+sudo rm -f /etc/hosts.BAK
 
 #Change to home directory
 cd
