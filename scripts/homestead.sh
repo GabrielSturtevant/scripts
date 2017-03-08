@@ -52,6 +52,7 @@ sudo dpkg -i vagrant*.deb
 rm -rf vagrant*.deb
 
 #Adds url entry used by homestead to hosts file
+echo "Attempting to manipulate /etc/hosts, a backup will be created: /etc/hosts.BAK"
 touch /tmp/hosts
 echo "192.168.10.10     homestead.app" > /tmp/hosts
 sudo cp /etc/hosts /etc/hosts.BAK
@@ -59,6 +60,7 @@ cat /etc/hosts >> /tmp/hosts
 sudo rm /etc/hosts
 sudo mv /tmp/hosts /etc/
 sudo rm -f /etc/hosts.BAK
+echo "Manipulation successful, /etc/hosts.BAK deleted"
 
 #Change to home directory
 cd
