@@ -30,10 +30,16 @@ touch temp.py
 rm -rf vagrant*.deb
 
 #Loads python script into temporary file
-curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/scripts/GetVagrantLink.py >> temp.py
+curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/scripts/GetVagrantLink.py > temp.py
 
-#uses output of python file to initiate a download of most recent vagrant installation file
-wget $(python temp.py)
+#check the integrity of the contents recieved via curl
+value=($(md5sum temp.py))
+if [[ "$value" = "66bedeb9271515f1714a70ee857b51a6" ]]; then
+    #uses output of python file to initiate a download of most recent vagrant installation file
+    wget $(python temp.py)
+else
+    printf "\n\nPython script integrity compromised!"
+fi
 
 #removes temporary python file
 rm -f temp.py
