@@ -4,6 +4,9 @@ These scripts are for my own personal use. Use these with caution as I have not 
 If you want to use them, these are the commands to follow:
 
 If you would like to use the Homestead installation script, it needs to be downloaded to your system. It is intended to only work on Ubuntu systems
+```
+git clone git@github.com:GabrielSturtevant/scripts.git; cd scripts/scripts; ./homestead.sh
+```
 
 The JetBrains Toolbox installer is mostly distribution agnostic. It does require you to be on a linux system. The following coomand will install the software:
 ```shell
