@@ -39,6 +39,7 @@ if [[ "$value" = "66bedeb9271515f1714a70ee857b51a6" ]]; then
     wget $(python temp.py)
 else
     printf "\n\nPython script integrity compromised!"
+    exit
 fi
 
 #removes temporary python file
