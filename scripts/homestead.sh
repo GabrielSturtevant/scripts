@@ -66,7 +66,7 @@ echo "Manipulation successful, /etc/hosts.BAK deleted"
 cd
 
 #Install the correct vagrant box
-echo "3" | vagrant box add laravel/homestead --provider virtual
+vagrant box add laravel/homestead
 
 #clones the homestead repo
 git clone https://github.com/laravel/homestead.git Homestead
