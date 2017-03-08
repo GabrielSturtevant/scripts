@@ -62,7 +62,7 @@ sudo mv /tmp/hosts /etc/
 cd
 
 #Install the correct vagrant box
-vagrant box add laravel/homestead
+echo "3" | vagrant box add laravel/homestead
 
 #clones the homestead repo
 git clone https://github.com/laravel/homestead.git Homestead
