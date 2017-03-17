@@ -2,8 +2,9 @@
 
 #Asks for email address to setup ssh key
 if [ ! -f ~/.ssh/id_rsa ]; then
+    printf "\nYou have not configured an ssh key.\n"
     read -p "What's your email address? " email
-    ssh-keygen -f id_rsa -t rsa -b 4096 -C "$email" -N ''
+    ssh-keygen -f ~/.ssh/id_rsa -t rsa -b 4096 -C "$email" -N ''
 fi
 
 #Ensures dependencies are met
