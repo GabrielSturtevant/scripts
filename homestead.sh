@@ -9,19 +9,19 @@ fi
 
 #Ensures dependencies are met
 if ! type git > /dev/null; then
-    printf "\nInstalling Git"
+    printf "\nInstalling Git\n"
     sudo apt install git -y
 fi
 if ! type virtualbox > /dev/null; then
-    printf "\nInstalling VirtualBox"
+    printf "\nInstalling VirtualBox\n"
     sudo apt install virtualbox -y
 fi
 if ! type vim > /dev/null; then
-    printf "\nInstalling Vim"
+    printf "\nInstalling Vim\n"
     sudo apt install vim -y
 fi
 if ! type pip > /dev/null; then
-    printf "\nInstalling Python-pip"
+    printf "\nInstalling Python-pip\n"
     sudo apt install python-pip -y
 fi
 
