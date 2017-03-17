@@ -4,20 +4,24 @@
 if [ ! -f ~/.ssh/id_rsa ]; then
     printf "\nYou have not configured an ssh key.\n"
     read -p "What's your email address? " email
-    ssh-keygen -f ~/.ssh/id_rsa -t rsa -b 4096 -C "$email" -N ''
+    ssh-keygen -f ~/.ssh/id_rsa -t rsa -b 4096 -C "$email" -N '' > /dev/null
 fi
 
 #Ensures dependencies are met
 if ! type git > /dev/null; then
-   sudo apt install git -y
+    printf "\nInstalling Git"
+    sudo apt install git -y
 fi
 if ! type virtualbox > /dev/null; then
+    printf "\nInstalling VirtualBox"
     sudo apt install virtualbox -y
 fi
 if ! type vim > /dev/null; then
-   sudo apt install vim -y
+    printf "\nInstalling Vim"
+    sudo apt install vim -y
 fi
 if ! type pip > /dev/null; then
+    printf "\nInstalling Python-pip"
     sudo apt install python-pip -y
 fi
 
