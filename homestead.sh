@@ -37,7 +37,7 @@ touch temp.py
 rm -rf vagrant*.deb
 
 #Loads python script into temporary file
-curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/scripts/GetVagrantLink.py > temp.py
+curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/GetVagrantLink.py > temp.py
 
 #check the integrity of the contents recieved via curl
 value=($(md5sum temp.py))
