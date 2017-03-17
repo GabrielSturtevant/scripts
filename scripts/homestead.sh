@@ -1,8 +1,10 @@
 #!/bin/bash
 
 #Asks for email address to setup ssh key
-read -p "What's your email address? " email
-echo $email
+if [ ! -f ~/.ssh/id_rsa ]; then
+    read -p "What's your email address? " email
+    ssh-keygen -f id_rsa -t rsa -b 4096 -C "$email" -N ''
+fi
 
 #Ensures dependencies are met
 if ! type git > /dev/null; then
@@ -66,7 +68,7 @@ echo "Manipulation successful, /etc/hosts.BAK deleted"
 cd
 
 #Install the correct vagrant box
-vagrant box add laravel/homestead
+vagrant box add laravel/homestead --provider virtualbox
 
 #clones the homestead repo
 git clone https://github.com/laravel/homestead.git Homestead
@@ -78,11 +80,9 @@ mkdir Code
 cd Code
 git clone https://github.com/laravel/laravel.git Laravel
 
-#Initiate homestead and create the SSH keys to be able to utilize the application
-cd
-cd Homestead
+#Initiate homestead
+cd ~/Homestead
 bash init.sh
-ssh-keygen -t rsa -b 4096 -C "$email"
 
 #edit the homestead configuraion file
 vim Homestead.yaml
