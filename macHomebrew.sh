@@ -8,55 +8,14 @@ if [ ! -f ~/.ssh/id_rsa ]; then
 fi
 
 #Ensures dependencies are met
-if ! type git > /dev/null; then
-    printf "\nInstalling Git\n"
-    sudo apt install git -y
-fi
 if ! type virtualbox > /dev/null; then
     printf "\nInstalling VirtualBox\n"
-    sudo apt install virtualbox -y
+    brew create install virtualbox
 fi
 if ! type vim > /dev/null; then
     printf "\nInstalling Vim\n"
-    sudo apt install vim -y
+    brew create install vagrant
 fi
-if ! type pip > /dev/null; then
-    printf "\nInstalling Python-pip\n"
-    sudo apt install python-pip -y
-fi
-
-#Ensures dependencies of custom python script are met
-sudo pip install beautifulsoup4
-sudo pip install requests
-sudo pip install lxml
-
-#Create temporary file to house python script that retrieves correct vagrant url
-touch temp.py
-
-#removes any previous vagrant deb files in the working directory
-rm -rf vagrant*.deb
-
-#Loads python script into temporary file
-curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/GetVagrantLink.py > temp.py
-
-#check the integrity of the contents recieved via curl
-value=($(md5sum temp.py))
-if [[ "$value" = "66bedeb9271515f1714a70ee857b51a6" ]]; then
-    #uses output of python file to initiate a download of most recent vagrant installation file
-    wget $(python temp.py)
-else
-    printf "\n\nPython script integrity compromised!"
-    exit
-fi
-
-#removes temporary python file
-rm -f temp.py
-
-#installs vagrant
-sudo dpkg -i vagrant*.deb
-
-#removes vagrant installation file
-rm -rf vagrant*.deb
 
 #Adds url entry used by homestead to hosts file
 echo "Attempting to manipulate /etc/hosts, a backup will be created: /etc/hosts.BAK"
