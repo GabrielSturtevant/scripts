@@ -9,7 +9,7 @@ git clone https://github.com/GabrielSturtevant/scripts.git; ./scripts/homestead.
 ```
 This command is still a work in progress:
 ```
-$(curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/homestead.sh) | bash
+curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/homestead.sh | bash
 ```
 
 The JetBrains Toolbox installer is mostly distribution agnostic. It does require you to be on a linux system. The following coomand will install the software:
