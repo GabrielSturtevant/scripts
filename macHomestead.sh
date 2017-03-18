@@ -1,5 +1,7 @@
 #!/bin/bash
 
+printf "\nRunning Mac Homestead install script\n\n"
+
 #Asks for email address to setup ssh key
 if [ ! -f ~/.ssh/id_rsa ]; then
     printf "\nYou have not configured an ssh key.\n"

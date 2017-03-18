@@ -7,9 +7,12 @@ elif [ $(uname) = "Linux" ]; then
     if [ "$DISTRIB_ID" = "Ubuntu" ]; then
         curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/ubuntuHomestead.sh | bash
     else
-        echo "Your version of Linux is not supported"
+        printf "\n\nYour version of Linux is not supported\n\n"
+        printf "If you are using a Debian derivative, you can, at your own risk, try running the script defined here:\n"
+        printf "https://github.com/GabrielSturtevant/scripts/blob/master/ubuntuHomestead.sh"
         exit
     fi
 else
-    echo "Your operating system is not yet supported"
+    printf "\n\nYour operating system is not yet supported"
+    exit
 fi
