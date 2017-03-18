@@ -12,7 +12,7 @@ if ! type virtualbox > /dev/null; then
     printf "\nInstalling VirtualBox\n"
     brew cask install virtualbox
 fi
-if ! type vim > /dev/null; then
+if ! type vagrant > /dev/null; then
     printf "\nInstalling Vim\n"
     brew cask install vagrant
 fi
