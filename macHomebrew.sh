@@ -10,11 +10,11 @@ fi
 #Ensures dependencies are met
 if ! type virtualbox > /dev/null; then
     printf "\nInstalling VirtualBox\n"
-    brew create install virtualbox
+    brew cask install virtualbox
 fi
 if ! type vim > /dev/null; then
     printf "\nInstalling Vim\n"
-    brew create install vagrant
+    brew cask install vagrant
 fi
 
 #Adds url entry used by homestead to hosts file
