@@ -7,6 +7,10 @@ If you would like to use the Homestead installation script, it needs to be downl
 ```
 git clone https://github.com/GabrielSturtevant/scripts.git; ./scripts/homestead.sh
 ```
+This command is still a work in progress:
+```
+$(curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/homestead.sh) | bash
+```
 
 The JetBrains Toolbox installer is mostly distribution agnostic. It does require you to be on a linux system. The following coomand will install the software:
 ```shell
