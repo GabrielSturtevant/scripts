@@ -9,7 +9,7 @@ elif [ $(uname) = "Linux" ]; then
     else
         printf "\n\nYour version of Linux is not supported\n\n"
         printf "If you are using a Debian derivative, you can, at your own risk, try running the script defined here:\n"
-        printf "https://github.com/GabrielSturtevant/scripts/blob/master/ubuntuHomestead.sh"
+        printf "https://github.com/GabrielSturtevant/scripts/blob/master/ubuntuHomestead.sh\n"
         exit
     fi
 else
