@@ -88,7 +88,8 @@ git clone https://github.com/laravel/laravel.git Laravel
 
 #Initiate homestead
 cd ~/Homestead
-bash init.sh
+chmod +x init.sh
+./init.sh
 
 #edit the homestead configuraion file
 vim Homestead.yaml < /dev/tty

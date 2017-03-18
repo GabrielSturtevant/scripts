@@ -13,7 +13,7 @@ if ! type virtualbox > /dev/null; then
     brew cask install virtualbox
 fi
 if ! type vagrant > /dev/null; then
-    printf "\nInstalling Vim\n"
+    printf "\nInstalling Vagrant\n"
     brew cask install vagrant
 fi
 
@@ -47,8 +47,9 @@ git clone https://github.com/laravel/laravel.git Laravel
 
 #Initiate homestead
 cd ~/Homestead
-bash init.sh
+chmod +x init.sh
+./init.sh
 
 #edit the homestead configuraion file
-vim Homestead.yaml < /dev/tty
+nano Homestead.yaml < /dev/tty
 exit
