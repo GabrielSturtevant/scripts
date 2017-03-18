@@ -1,4 +1,9 @@
 # scripts
+
+```
+curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/macHomebrew.sh | bash
+```
+
 These scripts are for my own personal use. Use these with caution as I have not written them with systems other than my own in mind
 
 If you want to use them, these are the commands to follow:
