@@ -90,5 +90,5 @@ cd ~/Homestead
 bash init.sh
 
 #edit the homestead configuraion file
-vim Homestead.yaml
+vim Homestead.yaml < /dev/tty
 exit
