@@ -1,7 +1,15 @@
 #!/bin/bash
 
 if [ $(uname) = "Darwin" ]; then
-    echo "This is a mac"
+    curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/macHomestead.sh | bash
 elif [ $(uname) = "Linux" ]; then
-    echo "This is Linux"
+    . /etc/lsb-release
+    if [ "$DISTRIB_ID" = "Ubuntu" ]; then
+        curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/ubuntuHomestead.sh | bash
+    else
+        echo "Your version of Linux is not supported"
+        exit
+    fi
+else
+    echo "Your operating system is not yet supported"
 fi
