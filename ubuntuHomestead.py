@@ -1,9 +1,17 @@
-import os, shutil, serial
+import os, sys, shutil, termios
 
-usr_input = serial.Serial('/dev/tty')
-print('enter something: ')
-something = usr_input.read()
-print(something)
+fd = sys.stdin.fileno()
+old = termios.tcgetattr(fd)
+new = termios.tcgetattr(fd)
+try:
+    termios.tcsetattr(fd, termios.TCSADRAIN, new)
+    passwd = input('Enter something')
+finally:
+    termios.tcsetattr(fd, termios.TCSADRAIN, old)
+
+print(passwd)
+
+exit(0)
 
 print('Running Ubuntu Homestead installation script')
 #  Checks whether the user has configured an ssh key
@@ -15,6 +23,6 @@ if not os.path.isfile(os.path.expanduser('~') + '/.ssh/id_rsa.pub'):
 print('Checking whether Git is installed')
 if shutil.which('git') is None:
     print('Git is not installed, installing now')
-    os.system('sudo apt install git -y')
+    # os.system('sudo apt install git -y')
 else:
     print('Git is already installed')
