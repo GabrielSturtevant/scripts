@@ -5,7 +5,7 @@ print('Running Ubuntu Homestead installation script')
 if not os.path.isfile(os.path.expanduser('~') + '/.ssh/id_rsa.pub'):
     print('ssh key has not been configured.')
     email = input('Please enter your email address:')
-    os.system('ssh-keygen -f ~/.ssh/id_rsa -t rsa -b 4096 -C {} -N '' > /dev/null'.format(email))
+    os.system('ssh-keygen -f ~/.ssh/id_rsa -t rsa -b 4096 -C "{}" -N ""'.format(email))
 
 # Ensures dependencies are met
 print('Checking whether Git is installed')
