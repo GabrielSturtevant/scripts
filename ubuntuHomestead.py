@@ -1,15 +1,17 @@
 import os, sys, shutil, termios
-
-fd = sys.stdin.fileno()
-old = termios.tcgetattr(fd)
-new = termios.tcgetattr(fd)
-try:
-    termios.tcsetattr(fd, termios.TCSADRAIN, new)
-    passwd = input('Enter something')
-finally:
-    termios.tcsetattr(fd, termios.TCSADRAIN, old)
-
-print(passwd)
+# fd = sys.stdin.fileno()
+# old = termios.tcgetattr(fd)
+# new = termios.tcgetattr(fd)
+# try:
+#     termios.tcsetattr(fd, termios.TCSADRAIN, new)
+#     passwd = input('Enter something')
+# finally:
+#     termios.tcsetattr(fd, termios.TCSADRAIN, old)
+#
+# print(passwd)
+print('say something')
+value = sys.stdin()
+print(value)
 
 exit(0)
 
