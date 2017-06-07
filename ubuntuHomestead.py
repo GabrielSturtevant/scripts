@@ -144,8 +144,7 @@ to_write += "{}\t{}".format(STATIC_IP, URL_NAME)
 new_hosts.write(to_write)
 new_hosts.close()
 
-os.system('sudo rm /etc/hosts')
-os.system('mv hosts /etc/hosts')
+os.system('sudo mv hosts /etc/hosts')
 os.system('sudo chmod {} /etc/hosts'.format(HOST_PERMISSIONS))
 print('Finished editing hosts file')
 
