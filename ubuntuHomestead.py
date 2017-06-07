@@ -151,8 +151,6 @@ print('Finished editing hosts file')
 # Go to home directory
 os.chdir(os.path.expanduser('~'))
 
-os.system('vagrant box add laravel/homestead --provider virtualbox')
-
 os.system('git clone https://github.com/laravel/homestead.git Homestead')
 
 path = FRAMEWORK_PATH
@@ -173,19 +171,24 @@ while True:
         if path.lower() == 'n':
             break
 
-os.system('cd {}'.format(FRAMEWORK_PATH))
+print('\n\n{}/{}\n\n'.format(os.path.expanduser('~'), FRAMEWORK_PATH))
+
+os.chdir('{}/{}'.format(os.path.expanduser('~'), FRAMEWORK_PATH))
 os.system('git clone {} {}'.format(DEFAULT_FRAMEWORK_URL, DEFAULT_FW_DIR_NAME))
 
 os.chdir(os.path.expanduser('~') + '/Homestead')
 os.system('chmod +x init.sh; ./init.sh')
 
 homestead_yaml = open('Homestead.yaml', 'r+')
-new_yaml = open('Homestead.yaml.new', 'r+')
-info = homestead_yaml.read()
+new_yaml = open('Homestead.yaml.new', 'w+')
+info = homestead_yaml.readlines()
 
 for line in info:
-    if 'Code/Laravel/Public' in line:
-        line = line.replace('Code/Laravel', '{}/{}'.format(FRAMEWORK_PATH, DEFAULT_FW_DIR_NAME))
+    if 'Code' in line:
+        line = line.replace('Code', '{}'.format(FRAMEWORK_PATH))
+
+    if 'Laravel' in line:
+        line = line.replace('Laravel', '{}'.format(DEFAULT_FW_DIR_NAME))
 
     if 'cpus: 1' in line:
         line = line.replace('1', NUMBER_OF_CPUS)
@@ -194,4 +197,3 @@ for line in info:
         line = line.replace('homestead.app', URL_NAME)
     new_yaml.write(line)
 os.system('rm Homestead.yaml; mv Homestead.yaml.new Homestead.yaml')
-
