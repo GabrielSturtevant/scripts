@@ -7,20 +7,22 @@ import hashlib
 import getopt
 
 
-## Program constants
+# Program constants
 FILE_HASH = "66bedeb9271515f1714a70ee857b51a6"
 STATIC_IP = "192.168.10.10"
-URL_NAME = "homestead.app"
 INITIAL_PATH = os.getcwd()
 HOST_PERMISSIONS = "644"
-FRAMEWORK_PATH = "Code"
+
+# User Definable Variables
+SSH_LINK = False
 INSTALLED_SSH = False
+FRAMEWORK_PATH = "Code"
+URL_NAME = "homestead.app"
 DEFAULT_FRAMEWORK_URL = "https://github.com/laravel/laravel.git"
 DEFAULT_FW_DIR_NAME = 'Laravel'
-DEFAULT_APP_NAME = 'homestead'
 NUMBER_OF_CPUS = '1'
 
-## System modifications
+# System modifications
 sys.stdin = open('/dev/tty')
 
 
@@ -47,21 +49,36 @@ def install(program_name, common_name):
     time.sleep(.5)
     cs()
 
-help_out = 'This provides a small list of command line arguments that this program will accept:' \
+help_out = 'This provides a small list of command line arguments that this \nprogram will accept:\n' \
            '\t-u\tEnter a custom url to fetch a Laravel repository from\n' \
            '\t-n\tEnter a custom application name\n' \
-           '\t-l\tEnter a custom link name ex: homestead = homestead.app'
+           '\t-d\tEnter a custom directory path to install Laravel in\n' \
+           '\t-D\tEnter a custom name for your Laravel directory\n' \
+           '\t-c\tEnter the number of cores to assign to your VM\n' \
+           '\t-h\tHelp screen'
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:],"uh")
+    opts, args = getopt.getopt(sys.argv[1:],"hu:n:l:d:D:c:", ['help'])
 except getopt.GetoptError:
     print('names.py -f -l -e -d -n <number of names to print>')
     sys.exit(2)
 
 for opt, arg in opts:
-    if opt == '-h':
+    if opt in ('-h', '--help'):
         print(help_out)
         sys.exit(1)
+    elif opt in ('-u'):
+        DEFAULT_FRAMEWORK_URL = arg
+        if 'git@github.com' in DEFAULT_FRAMEWORK_URL:
+            SSH_LINK = True
+    elif opt in ('-n'):
+        URL_NAME = arg + '.app'
+    elif opt in ('-D'):
+        DEFAULT_FW_DIR_NAME = arg
+    elif opt in ('-d'):
+        FRAMEWORK_PATH = arg
+    elif opt in ('-c'):
+        NUMBER_OF_CPUS = arg
 
 cs()
 print('Running Ubuntu Homestead installation script')
@@ -169,7 +186,7 @@ info = homestead_yaml.read()
 
 for line in info:
     if 'Code/Laravel/Public' in line:
-        line = line.replace('Code/Laravel', '{}/{}'.format(FRAMEWORK_PATH, DEFAULT_APP_NAME))
+        line = line.replace('Code/Laravel', '{}/{}'.format(FRAMEWORK_PATH, DEFAULT_FW_DIR_NAME))
 
     if 'cpus: 1' in line:
         line = line.replace('1', NUMBER_OF_CPUS)
