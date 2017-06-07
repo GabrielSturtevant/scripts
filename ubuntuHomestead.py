@@ -84,10 +84,16 @@ cs()
 print('Running Ubuntu Homestead installation script')
 #  Checks whether the user has configured an ssh key
 if not os.path.isfile(os.path.expanduser('~') + '/.ssh/id_rsa.pub'):
-    INSTALLED_SSH = True
     print('ssh key has not been configured.')
-    email = input('Please enter your email address:')
+    email = input('Please enter your email address:\n')
     os.system('ssh-keygen -f ~/.ssh/id_rsa -t rsa -b 4096 -C "{}" -N ""'.format(email))
+    ssh_key = open(os.path.expanduser('~') + '/.ssh/id_rsa.pub', 'r').read()
+    print("You will need to add this ssh key to github")
+    username = input('Please enter your github username:\n')
+    title = input('Please enter a name for your computer:\n')
+    to_send = 'curl -u "{}" --data \'{{"title":"{}","key":"{}"}}\' https://api.github.com/user/keys'.format(username, title, ssh_key)
+    to_send = to_send.replace('\n', '')
+    os.system(to_send)
 
 time.sleep(1)
 cs()
@@ -171,8 +177,6 @@ while True:
         if path.lower() == 'n':
             break
 
-print('\n\n{}/{}\n\n'.format(os.path.expanduser('~'), FRAMEWORK_PATH))
-
 os.chdir('{}/{}'.format(os.path.expanduser('~'), FRAMEWORK_PATH))
 os.system('git clone {} {}'.format(DEFAULT_FRAMEWORK_URL, DEFAULT_FW_DIR_NAME))
 
@@ -197,3 +201,5 @@ for line in info:
         line = line.replace('homestead.app', URL_NAME)
     new_yaml.write(line)
 os.system('rm Homestead.yaml; mv Homestead.yaml.new Homestead.yaml')
+
+os.chdir(INITIAL_PATH)
