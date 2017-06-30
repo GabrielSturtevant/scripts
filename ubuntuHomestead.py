@@ -81,8 +81,30 @@ for opt, arg in opts:
         NUMBER_OF_CPUS = arg
 
 cs()
+
 print('Running Ubuntu Homestead installation script')
-#  Checks whether the user has configured an ssh key
+
+# Update system
+print('Updating system')
+os.system('sudo apt update')
+
+time.sleep(1)
+cs()
+
+# Ensures dependencies are met
+install('curl', 'Curl')
+install('git', 'Git')
+install('virtualbox', 'VirtualBox')
+install('vim', 'Vim')
+install('python-pip', 'Pip')
+
+# Install python dependencies
+os.system('sudo pip install beautifulsoup4')
+os.system('sudo pip install requests')
+os.system('sudo pip install lxml')
+
+# TODO: Refine this
+# Checks whether the user has configured an ssh key
 if not os.path.isfile(os.path.expanduser('~') + '/.ssh/id_rsa.pub'):
     print('ssh key has not been configured.')
     email = input('Please enter your email address:\n')
@@ -97,24 +119,6 @@ if not os.path.isfile(os.path.expanduser('~') + '/.ssh/id_rsa.pub'):
 
 time.sleep(1)
 cs()
-
-# Update system
-print('Updating system')
-os.system('sudo apt update')
-
-time.sleep(1)
-cs()
-
-# Ensures dependencies are met
-install('git', 'Git')
-install('virtualbox', 'VirtualBox')
-install('vim', 'Vim')
-install('python-pip', 'Pip')
-
-# Install python dependencies
-os.system('sudo pip install beautifulsoup4')
-os.system('sudo pip install requests')
-os.system('sudo pip install lxml')
 
 os.system('rm -rf vagrant*.deb')
 
