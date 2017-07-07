@@ -19,5 +19,5 @@ curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/homestea
 
 The JetBrains Toolbox installer is mostly distribution agnostic. It does require you to be on a linux system. The following coomand will install the software:
 ```shell
-curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/jetbrains-toolbox.sh | sudo bash
+curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/jetbrains-toolbox.sh | bash
 ```
