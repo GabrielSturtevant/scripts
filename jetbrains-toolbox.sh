@@ -1,7 +1,13 @@
 #!/bin/bash
 # This script installs the jetbrains toolbox application
 if ! type jq > /dev/null; then
-    apt install jq -y
+    sudo apt install jq -y
+fi
+if ! type curl > /dev/null; then
+    sudo apt install curl -y
+fi
+if ! type wget > /dev/null; then
+    sudo apt install wget -y
 fi
 pushd $HOME/Downloads
 rm -f jetbrains-toolbox*.tar.gz
