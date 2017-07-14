@@ -1,6 +1,11 @@
 # scripts
 
 ```
+./ubuntuHomestead.py -u git@github.com:csun-metalab/etd-v3.git -n etdv3 -d Code/Meta -D ETD-V3 -c 2
+
+```
+
+```
 curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/installer.sh | bash
 ```
 
