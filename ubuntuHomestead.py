@@ -7,6 +7,14 @@ import requests
 import hashlib
 import getopt
 
+# Environment Variables
+ENV_VARS = [
+	'SCRIPTS_URL',
+	'SCRIPTS_URL_NAME',
+	'SCRIPTS_DIR_NAME',
+	'SCRIPTS_DIR_PATH',
+	'SCRIPTS_CORES'
+]
 
 # Program constants
 FILE_HASH = "66bedeb9271515f1714a70ee857b51a6"
@@ -28,58 +36,74 @@ sys.stdin = open('/dev/tty')
 
 
 def md5(fname):
-    hash_md5 = hashlib.md5()
-    with open(fname, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
+	hash_md5 = hashlib.md5()
+	with open(fname, "rb") as f:
+		for chunk in iter(lambda: f.read(4096), b""):
+			hash_md5.update(chunk)
+	return hash_md5.hexdigest()
 
 
 def cs():
-    os.system('clear')
+	os.system('clear')
 
 
 def install(program_name, common_name):
-    print('Checking whether {} is installed'.format(common_name))
-    if shutil.which(program_name) is None:
-        print('{} is not installed, installing now'.format(common_name))
-        os.system('sudo apt install {} -y'.format(program_name))
-    else:
-        print('{} is already installed'.format(common_name))
+	print('Checking whether {} is installed'.format(common_name))
+	if shutil.which(program_name) is None:
+		print('{} is not installed, installing now'.format(common_name))
+		os.system('sudo apt install {} -y'.format(program_name))
+	else:
+		print('{} is already installed'.format(common_name))
 
-    time.sleep(.5)
-    cs()
+	time.sleep(.5)
+	cs()
+
 
 help_out = 'This provides a small list of command line arguments that this \nprogram will accept:\n' \
-           '\t-u\tEnter a custom url to fetch a Laravel repository from\n' \
-           '\t-n\tEnter a custom application name\n' \
-           '\t-d\tEnter a custom directory path to install Laravel in\n' \
-           '\t-D\tEnter a custom name for your Laravel directory\n' \
-           '\t-c\tEnter the number of cores to assign to your VM\n' \
-           '\t-h\tHelp screen'
+		   '\t-u\tEnter a custom url to fetch a Laravel repository from\n' \
+		   '\t-n\tEnter a custom application name\n' \
+		   '\t-d\tEnter a custom directory path to install Laravel in\n' \
+		   '\t-D\tEnter a custom name for your Laravel directory\n' \
+		   '\t-c\tEnter the number of cores to assign to your VM\n' \
+		   '\t-h\tHelp screen'
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:],"hu:n:l:d:D:c:", ['help'])
+	opts, args = getopt.getopt(sys.argv[1:], "hu:n:l:d:D:c:", ['help'])
 except getopt.GetoptError:
-    print('names.py -f -l -e -d -n <number of names to print>')
-    sys.exit(2)
+	print('names.py -f -l -e -d -n <number of names to print>')
+	sys.exit(2)
 
 for opt, arg in opts:
-    if opt in ('-h', '--help'):
-        print(help_out)
-        sys.exit(1)
-    elif opt in ('-u'):
-        DEFAULT_FRAMEWORK_URL = arg
-        if 'git@github.com' in DEFAULT_FRAMEWORK_URL:
-            SSH_LINK = True
-    elif opt in ('-n'):
-        URL_NAME = arg + '.app'
-    elif opt in ('-D'):
-        DEFAULT_FW_DIR_NAME = arg
-    elif opt in ('-d'):
-        FRAMEWORK_PATH = arg
-    elif opt in ('-c'):
-        NUMBER_OF_CPUS = arg
+	if opt in ('-h', '--help'):
+		print(help_out)
+		sys.exit(1)
+	elif opt in ('-u'):
+		DEFAULT_FRAMEWORK_URL = arg
+		if 'git@github.com' in DEFAULT_FRAMEWORK_URL:
+			SSH_LINK = True
+	elif opt in ('-n'):
+		URL_NAME = arg + '.app'
+	elif opt in ('-D'):
+		DEFAULT_FW_DIR_NAME = arg
+	elif opt in ('-d'):
+		FRAMEWORK_PATH = arg
+	elif opt in ('-c'):
+		NUMBER_OF_CPUS = arg
+
+for x in ENV_VARS:
+	if x in os.environ:
+		if x == 'SCRIPTS_URL':
+			DEFAULT_FRAMEWORK_URL = os.getenv(x)
+			if 'git@github.com' in DEFAULT_FRAMEWORK_URL:
+				SSH_LINK = True
+		elif x == 'SCRIPTS_URL_NAME':
+			URL_NAME = os.getenv(x) + '.app'
+		elif x == 'SCRIPTS_DIR_NAME':
+			DEFAULT_FW_DIR_NAME = os.getenv(x)
+		elif x == 'SCRIPTS_DIR_PATH':
+			FRAMEWORK_PATH = os.getenv(x)
+		elif x == 'SCRIPTS_CORES':
+			NUMBER_OF_CPUS = os.getenv(x)
 
 cs()
 
@@ -107,16 +131,18 @@ os.system('sudo pip install lxml')
 # TODO: Refine this
 # Checks whether the user has configured an ssh key
 if not os.path.isfile(os.path.expanduser('~') + '/.ssh/id_rsa.pub'):
-    print('ssh key has not been configured.')
-    email = input('Please enter your email address:\n')
-    os.system('ssh-keygen -f ~/.ssh/id_rsa -t rsa -b 4096 -C "{}" -N ""'.format(email))
-    ssh_key = open(os.path.expanduser('~') + '/.ssh/id_rsa.pub', 'r').read()
-    print("You will need to add this ssh key to github")
-    username = input('Please enter your github username:\n')
-    title = input('Please enter a name for your computer:\n')
-    to_send = 'curl -u "{}" --data \'{{"title":"{}","key":"{}"}}\' https://api.github.com/user/keys'.format(username, title, ssh_key)
-    to_send = to_send.replace('\n', '')
-    os.system(to_send)
+	print('ssh key has not been configured.')
+	email = input('Please enter your email address:\n')
+	os.system('ssh-keygen -f ~/.ssh/id_rsa -t rsa -b 4096 -C "{}" -N ""'.format(email))
+	ssh_key = open(os.path.expanduser('~') + '/.ssh/id_rsa.pub', 'r').read()
+	print("You will need to add this ssh key to github")
+	username = input('Please enter your github username:\n')
+	title = input('Please enter a name for your computer:\n')
+	to_send = 'curl -u "{}" --data \'{{"title":"{}","key":"{}"}}\' https://api.github.com/user/keys'.format(username,
+																											title,
+																											ssh_key)
+	to_send = to_send.replace('\n', '')
+	os.system(to_send)
 
 time.sleep(1)
 cs()
@@ -131,10 +157,10 @@ python_program.write(r.content.decode('utf-8'))
 python_program.close()
 
 if md5(file_name) == FILE_HASH:
-    os.system('wget $(python {})'.format(file_name))
+	os.system('wget $(python {})'.format(file_name))
 else:
-    print('Python script integrity compromised. Exiting now')
-    exit(1)
+	print('Python script integrity compromised. Exiting now')
+	exit(1)
 
 os.system('rm -f {}'.format(file_name))
 
@@ -167,25 +193,25 @@ os.system('git clone https://github.com/laravel/homestead.git Homestead')
 path = FRAMEWORK_PATH
 
 while True:
-    path = path.split('/')
-    if path[0] == '':
-        path.pop()
+	path = path.split('/')
+	if path[0] == '':
+		path.pop()
 
-    try:
-        os.makedirs(os.path.join(os.path.expanduser('~'), *path))
-        FRAMEWORK_PATH = '/'.join(path)
-        break
-    except FileExistsError:
-        print('Oops, looks like that directory already exists\n')
-        path = input('Please enter a new path to place the framework'
-                     ' in \n(type N to place it in existing directory):\n')
-        if path.lower() == 'n':
-            break
+	try:
+		os.makedirs(os.path.join(os.environ['HOME'], *path))
+		FRAMEWORK_PATH = '/'.join(path)
+		break
+	except FileExistsError:
+		print('Oops, looks like that directory already exists\n')
+		path = input('Please enter a new path to place the framework'
+					 ' in \n(type N to place it in existing directory):\n')
+		if path.lower() == 'n':
+			break
 
-os.chdir('{}/{}'.format(os.path.expanduser('~'), FRAMEWORK_PATH))
+os.chdir('{}/{}'.format(os.environ['HOME'], FRAMEWORK_PATH))
 os.system('git clone {} {}'.format(DEFAULT_FRAMEWORK_URL, DEFAULT_FW_DIR_NAME))
 
-os.chdir(os.path.expanduser('~') + '/Homestead')
+os.chdir(os.environ['HOME'] + '/Homestead')
 os.system('chmod +x init.sh; ./init.sh')
 
 homestead_yaml = open('Homestead.yaml', 'r+')
@@ -193,18 +219,18 @@ new_yaml = open('Homestead.yaml.new', 'w+')
 info = homestead_yaml.readlines()
 
 for line in info:
-    if 'Code' in line:
-        line = line.replace('Code', '{}'.format(FRAMEWORK_PATH))
+	if 'Code' in line:
+		line = line.replace('Code', '{}'.format(FRAMEWORK_PATH))
 
-    if 'Laravel' in line:
-        line = line.replace('Laravel', '{}'.format(DEFAULT_FW_DIR_NAME))
+	if 'Laravel' in line:
+		line = line.replace('Laravel', '{}'.format(DEFAULT_FW_DIR_NAME))
 
-    if 'cpus: 1' in line:
-        line = line.replace('1', NUMBER_OF_CPUS)
+	if 'cpus: 1' in line:
+		line = line.replace('1', NUMBER_OF_CPUS)
 
-    if 'homestead.app' in line:
-        line = line.replace('homestead.app', URL_NAME)
-    new_yaml.write(line)
+	if 'homestead.app' in line:
+		line = line.replace('homestead.app', URL_NAME)
+	new_yaml.write(line)
 os.system('rm Homestead.yaml; mv Homestead.yaml.new Homestead.yaml')
 
 os.chdir(INITIAL_PATH)
