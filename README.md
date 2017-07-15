@@ -1,5 +1,11 @@
 # scripts
 
+This is a test:
+```
+export SCRIPTS_URL='git@github.com:csun-metalab/etd-v3.git' && export SCRIPTS_URL_NAME='etdv3' && export SCRIPTS_DIR_NAME='ETD-V3' && export SCRIPTS_DIR_PATH='Code/Meta' && export SCRIPTS_CORES='2' && curl https://raw.githubusercontent.com/GabrielSturtevant/scripts/master/ubuntuHomestead.py | python3
+```
+
+
 ```
 ./ubuntuHomestead.py -u git@github.com:csun-metalab/etd-v3.git -n etdv3 -d Code/Meta -D ETD-V3 -c 2
 
