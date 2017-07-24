@@ -1,4 +1,6 @@
-# scripts
+# This repository is depricated.
+
+### scripts
 
 This is a test:
 ```
